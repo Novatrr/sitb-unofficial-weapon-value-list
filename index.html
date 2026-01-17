@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shrek In The Backrooms – Unofficial Value List</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
@@ -164,8 +165,12 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        tr:nth-child(even) {
+        tr.row-even {
             background-color: #f0f6c8;
+        }
+        
+        tr.row-odd {
+            background-color: #ffffff;
         }
 
         tr:hover {
@@ -843,7 +848,7 @@ function applyFilters() {
     const rows = document.querySelectorAll("table tbody tr");
     const noResultsRow = document.getElementById("noResultsRow");
 
-    let visibleCount = 0;
+    let visibleRows = [];
 
     rows.forEach(row => {
         if (row.id === "noResultsRow") return;
@@ -853,20 +858,23 @@ function applyFilters() {
 
         let visible = true;
 
-        // Type filter
         if (type === "weapon" && !showWeapon) visible = false;
         if (type === "tool" && !showTool) visible = false;
-
-        // Search filter
         if (!itemName.includes(searchValue)) visible = false;
 
         row.style.display = visible ? "" : "none";
 
-        if (visible) visibleCount++;
+        if (visible) visibleRows.push(row);
     });
 
-    noResultsRow.style.display = visibleCount === 0 ? "" : "none";
-                        }
+    // Apply proper zebra striping ONLY to visible rows
+    visibleRows.forEach((row, index) => {
+        row.classList.remove("row-even", "row-odd");
+        row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
+    });
+
+    noResultsRow.style.display = visibleRows.length === 0 ? "" : "none";
+    }
 
 calculateAndRank();
 applyFilters();
@@ -879,3 +887,4 @@ function searchTable() {
 </body>
 
 </html> 
+
