@@ -29,8 +29,16 @@
 
     body {
       font-family: 'VCR', monospace;
-      background-color: #f7f9c4;
       color: #1f2d16;
+
+  background: linear-gradient(
+      to bottom,
+      #f7f9c4 0%,
+      #e8ef9a 50%,
+      #cddc7a 100%
+    );
+
+  background-attachment: fixed; 
     }
 
     @font-face {
@@ -86,11 +94,12 @@
       min-height: 100vh;
       padding: 40px;
       background: linear-gradient(
-        to bottom,
-        #f7f9c4 0%,
-        #e8ef9a 50%,
-        #cddc7a 100%
-      );
+      to bottom,
+      #f7f9c4 0%,
+      #e8ef9a 40%,
+      #cddc7a 70%,
+      #b6cc63 100%
+    );
       width: 100%;
       max-width: 100%;
     }
@@ -962,4 +971,5 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
