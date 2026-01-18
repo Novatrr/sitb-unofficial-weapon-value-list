@@ -228,6 +228,16 @@
       font-weight: 600;
     }
 
+    .controls input[type="checkbox"] {
+      transform: scale(1.35);
+      margin-right: 6px;
+      cursor: pointer;
+    }
+
+    .controls label {
+      cursor: pointer;
+    }
+
     @media (min-width: 768px) {
       .description,
       .credits {
@@ -292,28 +302,28 @@
       }
 
       .table-container {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  table {
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  th, td {
-    font-size: 12px;
-    padding: 10px 8px;
-  }
-
-  th:nth-child(2),
-  td:nth-child(2) {
-    min-width: 220px;
-  }
-}
+        padding-left: 0;
+        padding-right: 0;
+      }
+    
+      table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    
+      th, td {
+        font-size: 12px;
+        padding: 10px 8px;
+      }
+    
+      th:nth-child(2),
+      td:nth-child(2) {
+        min-width: 220px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1365,6 +1375,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
