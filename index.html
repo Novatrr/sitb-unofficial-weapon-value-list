@@ -286,6 +286,12 @@
         flex-direction: column;
       }
 
+      .controls .filter-group {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+      }
+
       .controls button {
         width: 100%;
         font-size: 12px;
@@ -353,14 +359,18 @@
         <button onclick="sortTable('rarity')">Sort by Rarity</button>
         <button onclick="sortTable('power')">Sort by Power / Usage</button>
         <label>
+          
+<div class="filter-group">
+  <label>
     <input type="checkbox" id="filterWeapon" checked onchange="applyFilters()">
     Weapon
-</label>
+  </label>
 
-<label>
+  <label>
     <input type="checkbox" id="filterTool" checked onchange="applyFilters()">
     Tool
-</label>
+  </label>
+</div>
 
     </div>
 
@@ -1375,6 +1385,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
