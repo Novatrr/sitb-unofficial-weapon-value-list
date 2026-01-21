@@ -2055,9 +2055,9 @@ function calculateAndRank() {
 
         let totalValue;
         if (type === "tool") {
-            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 2)) / 1000;
+            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 1.5)) / 1000;
         } else {
-            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 2.5)) / 10000;
+            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 2)) / 1000;
         }
 
         totalValue = Math.round(totalValue);
@@ -2150,6 +2150,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
