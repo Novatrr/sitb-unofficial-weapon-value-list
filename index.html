@@ -353,10 +353,8 @@
         </div>
     <p class="description">
     This is an unofficial Shrek In The Backrooms value list. 
-    <br> The total value of each weapon is determined using the following formula: 
-    <br> <b>Total Value = ((Power<sup>2.5</sup>) × (Rarity<sup>2.5</sup>)) / 10,000</b>.
-    <br> The total value of each tool is determined using the following formula: 
-    <br> <b>Total Value = ((Usage<sup>2</sup>) × (Rarity<sup>2.5</sup>)) / 1,000</b>.
+    <br> The total value of each item is determined using the following formula: 
+    <br> <b>Total Value = ((Power<sup>2</sup>) × (Rarity<sup>2.5</sup>)) / 1,000</b>.
     </p>
 
 <div class="controls-bar">
@@ -458,14 +456,6 @@
             </tr>
             <tr>
                 <td>#</td>
-                <td>Boombox</td>
-                <td>Tool</td>
-                <td>0</td>
-                <td>5</td>
-                <td>x</td>
-            </tr>
-            <tr>
-                <td>#</td>
                 <td>2025 Shrekmas Gift #10</td>
                 <td>Tool</td>
                 <td>6</td>
@@ -486,6 +476,14 @@
                 <td>Weapon</td>
                 <td>2</td>
                 <td>12</td>
+                <td>x</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>Force Field Potion</td>
+                <td>Tool</td>
+                <td>1</td>
+                <td>20</td>
                 <td>x</td>
             </tr>
             <tr>
@@ -638,6 +636,14 @@
                 <td>Weapon</td>
                 <td>8</td>
                 <td>35</td>
+                <td>x</td>
+            </tr>
+            <tr>
+                <td>#</td>
+                <td>Speed Potion</td>
+                <td>Tool</td>
+                <td>1</td>
+                <td>18</td>
                 <td>x</td>
             </tr>
             <tr>
@@ -906,25 +912,9 @@
             </tr>
             <tr>
                 <td>#</td>
-                <td>Force Field Potion</td>
-                <td>Tool</td>
-                <td>1</td>
-                <td>20</td>
-                <td>x</td>
-            </tr>
-            <tr>
-                <td>#</td>
                 <td>Present Bomb</td>
                 <td>Weapon</td>
                 <td>8</td>
-                <td>18</td>
-                <td>x</td>
-            </tr>
-            <tr>
-                <td>#</td>
-                <td>Speed Potion</td>
-                <td>Tool</td>
-                <td>1</td>
                 <td>18</td>
                 <td>x</td>
             </tr>
@@ -2016,6 +2006,14 @@
                 <td>45</td>
                 <td>x</td>
             </tr>
+            <tr>
+                <td>#</td>
+                <td>Boombox</td>
+                <td>Tool</td>
+                <td>0</td>
+                <td>5</td>
+                <td>x</td>
+            </tr>
 
             <tr id="noResultsRow" style="display: none;">
     <td colspan="6" style="text-align: center; padding: 30px; font-style: italic; color: #6a8f3a;">
@@ -2055,7 +2053,7 @@ function calculateAndRank() {
 
         let totalValue;
         if (type === "tool") {
-            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 1.5)) / 1000;
+            totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 2)) / 1000;
         } else {
             totalValue = (Math.pow(rarity, 2.5) * Math.pow(power, 2)) / 1000;
         }
@@ -2150,6 +2148,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
