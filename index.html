@@ -354,7 +354,7 @@
     <p class="description">
     This is an unofficial Shrek In The Backrooms value list. 
     <br> The total value of each item is determined using the following formula: 
-    <br> <b>Total Value = ((Power<sup>1.5</sup>) × (Rarity<sup>3.5</sup>)) / 10000</b>.
+    <br> <b>Total Value = ((Power<sup>1.5</sup>) × (Rarity<sup>3</sup>)) / 1000</b>.
     </p>
 
 <div class="controls-bar">
@@ -1890,8 +1890,8 @@
                 <td>#</td>
                 <td>Musket</td>
                 <td>Weapon</td>
-                <td>-</td>
-                <td>-</td>
+                <td>80</td>
+                <td>34</td>
                 <td>x</td>
             </tr>
             <tr>
@@ -2053,9 +2053,9 @@ function calculateAndRank() {
 
         let totalValue;
         if (type === "tool") {
-            totalValue = (Math.pow(rarity, 3.5) * Math.pow(power, 1.5)) / 10000;
+            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
         } else {
-            totalValue = (Math.pow(rarity, 3.5) * Math.pow(power, 1.5)) / 10000;
+            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
         }
 
         totalValue = Math.round(totalValue);
@@ -2148,6 +2148,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
