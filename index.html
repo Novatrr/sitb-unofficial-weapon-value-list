@@ -330,6 +330,18 @@
         width: 100%;
       }
 
+      .toggle-cell {
+        width: 40px;
+        text-align: center;
+        cursor: pointer;
+        font-size: 16px;
+        user-select: none;
+      }
+      
+      tr.item-row.open {
+        background-color: #e3ef9f;
+      }
+
       .table-container {
         padding-left: 0;
         padding-right: 0;
@@ -2043,7 +2055,7 @@
             </tr>
 
             <tr id="noResultsRow" style="display: none;">
-    <td colspan="6" style="text-align: center; padding: 30px; font-style: italic; color: #6a8f3a;">
+    <td colspan="7" style="text-align: center; padding: 30px; font-style: italic; color: #6a8f3a;">
         No items found.
     </td>
     </tr>
@@ -2089,10 +2101,11 @@ function calculateAndRank() {
   rows
     .sort((a, b) => b.dataset.total - a.dataset.total)
     .forEach((row, index) => {
-      row.querySelector(".rank-cell").textContent = `#${index + 1}`;
       row.dataset.rank = index + 1;
+      row.querySelector(".rank-cell").textContent = `#${index + 1}`;
+
       tbody.appendChild(row);
-      tbody.appendChild(row.nextElementSibling); // keep detail row attached
+      tbody.appendChild(row.nextElementSibling); // keep detail row
     });
 
   applyZebraStriping();
@@ -2102,13 +2115,12 @@ function sortTable(type) {
   const tbody = document.querySelector("table tbody");
   const rows = Array.from(document.querySelectorAll("tr.item-row"));
 
-  let key = type;
-  let ascending = type === "rank";
+  const ascending = type === "rank";
 
   rows
     .sort((a, b) => {
-      const A = Number(a.dataset[key]);
-      const B = Number(b.dataset[key]);
+      const A = Number(a.dataset[type]);
+      const B = Number(b.dataset[type]);
       return ascending ? A - B : B - A;
     })
     .forEach(row => {
@@ -2161,15 +2173,14 @@ function toggleRow(row) {
   row.classList.toggle("open", !isOpen);
 }
 
-/* ========= INIT ========= */
 window.addEventListener("load", () => {
   calculateAndRank();
   applyFilters();
 });
 </script>
-
 </body>
 </html> 
+
 
 
 
