@@ -146,22 +146,6 @@
       font-size: 12px;
     }
 
-    .detail-row {
-      display: none;
-    }
-    
-    .detail-content {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    
-    .detail-content img {
-      width: 180px;
-      max-width: 100%;
-      border-radius: 8px;
-    }
-
     .search-wrapper {
       position: relative;
     }
@@ -231,18 +215,12 @@
       background-color: #e3ef9f;
     }
 
-    thead th:first-child {
-      width: 40px;
-    }
-
-    th:nth-child(1), td:nth-child(1) { width: 40px; text-align: center; } 
-    th:nth-child(2), td:nth-child(2) { width: 80px; text-align: right; }  
-    th:nth-child(3), td:nth-child(3) { width: 420px; }                    
-    th:nth-child(4), td:nth-child(4) { width: 100px; }                    
-    th:nth-child(5), td:nth-child(5) { width: 100px; text-align: right; } 
-    th:nth-child(6), td:nth-child(6) { width: 140px; text-align: right; } 
-    th:nth-child(7), td:nth-child(7) { width: 160px; text-align: right; } 
-
+    th:nth-child(1), td:nth-child(1) { width: 70px; text-align: right; }
+    th:nth-child(2), td:nth-child(2) { width: 350px; }
+    th:nth-child(3), td:nth-child(3) { width: 100px; }
+    th:nth-child(4), td:nth-child(4) { width: 100px; text-align: right; }
+    th:nth-child(5), td:nth-child(5) { width: 150px; text-align: right; }
+    th:nth-child(6), td:nth-child(6) { width: 160px; text-align: right; }
 
     .credits {
       margin-top: 14px;
@@ -264,25 +242,6 @@
 
     .controls label {
       cursor: pointer;
-    }
-
-    .toggle-cell {
-      cursor: pointer;
-      font-size: 16px;
-      user-select: none;
-    }
-    
-    tr.detail-row {
-      display: none;
-    }
-    
-    tr.item-row.open {
-      background-color: #e3ef9f;
-    }
-
-    .table-scroll {
-      width: 100%;
-      overflow-x: auto;
     }
 
     @media (min-width: 768px) {
@@ -359,6 +318,14 @@
         padding-right: 0;
       }
     
+      table {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        white-space: nowrap;
+      }
+    
       th, td {
         font-size: 12px;
         padding: 10px 8px;
@@ -381,7 +348,7 @@
             <div class="header-text">
                 <div class="game-name">Shrek In The Backrooms</div>
                 <div class="author">Unofficial Value list</div>
-                <div class="last-updated">Last updated: 2/9/2026</div>
+                <div class="last-updated">Last updated: 1/21/2026</div>
             </div>
         </div>
     <p class="description">
@@ -419,11 +386,9 @@
     >
     </div>
 </div>
-    <div class="table-scroll">
     <table>
         <thead>
     <tr>
-        <th></th>
         <th>Rank</th>
         <th>Weapon / Item</th>
         <th>Type</th>
@@ -433,23 +398,14 @@
     </tr>
         </thead>
         <tbody>
-            <tr class="item-row">
-            <td class="toggle-cell" onclick="toggleRow(this.parentElement)">▶</td>
-            <td class="rank-cell"></td>
-            <td class="item-name">MOAW/Waffle Launcher</td>
-            <td class="item-type">Weapon</td>
-            <td class="rarity">100</td>
-            <td class="power">100</td>
-            <td class="total-value"></td>
-          </tr>
-          
-          <tr class="detail-row">
-            <td colspan="7">
-              <div class="detail-content">
-                <img src="images/MOAW.png">
-              </div>
-            </td>
-          </tr>
+            <tr>
+                <td>#</td>
+                <td>MOAW/Waffle Launcher</td>
+                <td>Weapon</td>
+                <td>100</td>
+                <td>100</td>
+                <td>x</td>
+            </tr>
             <tr>
                 <td>#</td>
                 <td>Nuke Launcher</td>
@@ -2060,14 +2016,13 @@
             </tr>
 
             <tr id="noResultsRow" style="display: none;">
-    <td colspan="7" style="text-align: center; padding: 30px; font-style: italic; color: #6a8f3a;">
+    <td colspan="6" style="text-align: center; padding: 30px; font-style: italic; color: #6a8f3a;">
         No items found.
     </td>
     </tr>
 
         </tbody>
     </table>
-    </div>
     <div class="credits">
     Unofficial value list by <strong>Nova (UNOIRD)</strong><br>
     Contributors: <strong>Meowmere5000, PivotEngine, NS16</strong><br>
@@ -2077,127 +2032,119 @@
 
     <script>
 function applyZebraStriping() {
-  const rows = [...document.querySelectorAll("tr.item-row")]
-    .filter(r => r.style.display !== "none");
+    const rows = Array.from(document.querySelectorAll("table tbody tr"))
+        .filter(row => row.style.display !== "none" && row.id !== "noResultsRow");
 
-  rows.forEach((row, i) => {
-    row.classList.remove("row-even", "row-odd");
-    row.classList.add(i % 2 === 0 ? "row-odd" : "row-even");
-  });
+    rows.forEach((row, index) => {
+        row.classList.remove("row-even", "row-odd");
+        row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
+    });
 }
-
+        
 function calculateAndRank() {
-  const tbody = document.querySelector("tbody");
-  const items = [...document.querySelectorAll("tr.item-row")];
+    const tbody = document.querySelector("table tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"))
+    .filter(row => row.id !== "noResultsRow");
 
-  items.forEach(row => {
-    const rarity = +row.querySelector(".rarity").textContent;
-    const power = +row.querySelector(".power").textContent;
+    rows.forEach(row => {
+        const type = row.children[2].textContent.trim().toLowerCase();
+        const rarity = Number(row.children[3].textContent);
+        const power = Number(row.children[4].textContent);
 
-    const total = Math.round(
-      (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000
-    );
+        let totalValue;
+        if (type === "tool") {
+            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
+        } else {
+            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
+        }
 
-    row.dataset.total = total;
-    row.dataset.rarity = rarity;
-    row.dataset.power = power;
-    row.querySelector(".total-value").textContent = total.toLocaleString();
-  });
+        totalValue = Math.round(totalValue);
+        row.children[5].textContent = totalValue.toLocaleString();
 
-  items
-    .sort((a, b) => b.dataset.total - a.dataset.total)
-    .forEach((row, i) => {
-      row.dataset.rank = i + 1;
-      row.querySelector(".rank-cell").textContent = `#${i + 1}`;
-
-      tbody.appendChild(row);
-      tbody.appendChild(row.nextElementSibling);
+        row.dataset.total = totalValue;
+        row.dataset.power = power;
+        row.dataset.rarity = rarity;
     });
 
-  applyZebraStriping();
+    rows.sort((a, b) => b.dataset.total - a.dataset.total);
+
+    rows.forEach((row, index) => {
+        row.dataset.rank = index + 1;
+        row.children[0].textContent = `#${index + 1}`;
+        tbody.appendChild(row);
+    });
 }
+function sortTable(type) {
+    const tbody = document.querySelector("table tbody");
+    const rows = Array.from(tbody.querySelectorAll("tr"))
+        .filter(row => row.id !== "noResultsRow");
 
-function sortTable(key) {
-  const tbody = document.querySelector("tbody");
-  const items = [...document.querySelectorAll("tr.item-row")];
-  const asc = key === "rank";
+    let key;
+    let ascending = false;
 
-  items
-    .sort((a, b) => {
-      const A = +a.dataset[key];
-      const B = +b.dataset[key];
-      return asc ? A - B : B - A;
-    })
-    .forEach(row => {
-      tbody.appendChild(row);
-      tbody.appendChild(row.nextElementSibling);
+    if (type === "rank") {
+        key = "rank";
+        ascending = true;
+    }
+    if (type === "rarity") key = "rarity";
+    if (type === "power") key = "power";
+
+    rows.sort((a, b) => {
+        const A = Number(a.dataset[key]);
+        const B = Number(b.dataset[key]);
+        return ascending ? A - B : B - A;
     });
 
-  applyZebraStriping();
+    rows.forEach(row => tbody.appendChild(row));
+
+    applyZebraStriping(); 
 }
 
 function applyFilters() {
-  const q = document.getElementById("searchInput").value.toLowerCase();
-  const showWeapon = filterWeapon.checked;
-  const showTool = filterTool.checked;
-  const noResults = document.getElementById("noResultsRow");
+    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+    const showWeapon = document.getElementById("filterWeapon").checked;
+    const showTool = document.getElementById("filterTool").checked;
 
-  let visible = 0;
+    const rows = document.querySelectorAll("table tbody tr");
+    const noResultsRow = document.getElementById("noResultsRow");
 
-  document.querySelectorAll("tr.item-row").forEach(row => {
-    const name = row.querySelector(".item-name").textContent.toLowerCase();
-    const type = row.querySelector(".item-type").textContent.toLowerCase();
+    let visibleRows = [];
 
-    let ok = true;
-    if (type === "weapon" && !showWeapon) ok = false;
-    if (type === "tool" && !showTool) ok = false;
-    if (!name.includes(q)) ok = false;
+    rows.forEach(row => {
+        if (row.id === "noResultsRow") return;
 
-    row.style.display = ok ? "" : "none";
-    row.nextElementSibling.style.display = "none";
-    row.classList.remove("open");
-    row.querySelector(".toggle-cell").textContent = "▶";
+        const itemName = row.children[1].textContent.toLowerCase();
+        const type = row.children[2].textContent.toLowerCase();
 
-    if (ok) visible++;
-  });
+        let visible = true;
 
-  noResults.style.display = visible === 0 ? "" : "none";
-  applyZebraStriping();
+        if (type === "weapon" && !showWeapon) visible = false;
+        if (type === "tool" && !showTool) visible = false;
+        if (!itemName.includes(searchValue)) visible = false;
+
+        row.style.display = visible ? "" : "none";
+
+        if (visible) visibleRows.push(row);
+    });
+
+    visibleRows.forEach((row, index) => {
+        row.classList.remove("row-even", "row-odd");
+        row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
+    });
+
+    noResultsRow.style.display = visibleRows.length === 0 ? "" : "none";
+    
+    applyZebraStriping();
+    }
+
+calculateAndRank();
+applyFilters();
+
+function searchTable() {
+    applyFilters();
 }
 
-function toggleRow(row) {
-  const detail = row.nextElementSibling;
-  const arrow = row.querySelector(".toggle-cell");
-
-  const open = detail.style.display === "table-row";
-  detail.style.display = open ? "none" : "table-row";
-  arrow.textContent = open ? "▶" : "▼";
-  row.classList.toggle("open", !open);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  calculateAndRank();
-  applyFilters();
-});
 </script>
+    </div>
 </body>
 </html> 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
