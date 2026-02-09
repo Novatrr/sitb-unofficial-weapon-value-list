@@ -231,6 +231,10 @@
       background-color: #e3ef9f;
     }
 
+    thead th:first-child {
+      width: 40px;
+    }
+
     th:nth-child(1), td:nth-child(1) { width: 40px; text-align: center; } 
     th:nth-child(2), td:nth-child(2) { width: 80px; text-align: right; }  
     th:nth-child(3), td:nth-child(3) { width: 420px; }                    
@@ -274,6 +278,11 @@
     
     tr.item-row.open {
       background-color: #e3ef9f;
+    }
+
+    .table-scroll {
+      width: 100%;
+      overflow-x: auto;
     }
 
     @media (min-width: 768px) {
@@ -350,14 +359,6 @@
         padding-right: 0;
       }
     
-      table {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-    
       th, td {
         font-size: 12px;
         padding: 10px 8px;
@@ -418,6 +419,7 @@
     >
     </div>
 </div>
+    <div class="table-scroll">
     <table>
         <thead>
     <tr>
@@ -2065,6 +2067,7 @@
 
         </tbody>
     </table>
+    </div>
     <div class="credits">
     Unofficial value list by <strong>Nova (UNOIRD)</strong><br>
     Contributors: <strong>Meowmere5000, PivotEngine, NS16</strong><br>
@@ -2172,13 +2175,14 @@ function toggleRow(row) {
   row.classList.toggle("open", !open);
 }
 
-window.onload = () => {
+document.addEventListener("DOMContentLoaded", () => {
   calculateAndRank();
   applyFilters();
-};
+});
 </script>
 </body>
 </html> 
+
 
 
 
