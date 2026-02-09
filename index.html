@@ -276,10 +276,31 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     }
 
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    table {
+      min-width: 720px;
+    }
+
     @media (min-width: 768px) {
       .description,
       .credits {
         font-size: 14px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .item-thumb {
+        width: 14px;
+        height: 14px;
+      }
+    
+      .item-cell {
+        gap: 6px;
       }
     }
 
@@ -418,6 +439,7 @@
     >
     </div>
 </div>
+    <div class="table-wrapper">
     <table>
         <thead>
     <tr>
@@ -2062,6 +2084,7 @@
 
         </tbody>
     </table>
+    </div>
     <div class="credits">
     Unofficial value list by <strong>Nova (UNOIRD)</strong><br>
     Contributors: <strong>Meowmere5000, PivotEngine, NS16</strong><br>
@@ -2201,5 +2224,6 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
