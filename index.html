@@ -286,6 +286,23 @@
       min-width: 720px;
     }
 
+    td {
+      background: transparent;
+    }
+
+    .item-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .item-thumb {
+      height: 85%;
+      max-height: 42px;
+      width: auto;
+      image-rendering: pixelated;
+    }
+
     @media (min-width: 768px) {
       .description,
       .credits {
@@ -295,12 +312,11 @@
 
     @media (max-width: 600px) {
       .item-thumb {
-        width: 14px;
-        height: 14px;
+        max-height: 36px;
       }
     
-      .item-cell {
-        gap: 6px;
+      .item-large {
+        max-height: 72px;
       }
     }
 
@@ -2224,6 +2240,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
