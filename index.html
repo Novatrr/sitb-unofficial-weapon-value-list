@@ -182,10 +182,21 @@
 
     table {
       width: 100%;
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
+      background: transparent;
+    }
+
+    tbody tr {
       background-color: #ffffff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    }
+    
+    tr.row-even {
+      background-color: #f0f6c8;
+    }
+    
+    tr.row-odd {
+      background-color: #ffffff;
     }
 
     thead th {
@@ -407,6 +418,11 @@
       th:nth-child(2),
       td:nth-child(2) {
         min-width: 220px;
+
+      td,
+      th {
+        background-color: inherit !important;
+      }
       }
     }
   </style>
@@ -421,7 +437,7 @@
             <div class="header-text">
                 <div class="game-name">Shrek In The Backrooms</div>
                 <div class="author">Unofficial Value list</div>
-                <div class="last-updated">Last updated: 1/21/2026</div>
+                <div class="last-updated">Last updated: 2/9/2026</div>
             </div>
         </div>
     <p class="description">
@@ -2244,6 +2260,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
