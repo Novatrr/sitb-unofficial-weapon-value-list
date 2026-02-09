@@ -307,15 +307,20 @@
     }
     
     .item-thumb {
-      height: 85%;
+      height: 80%;
       max-height: 42px;
       width: auto;
+      cursor: pointer;
       image-rendering: pixelated;
     }
 
     .item-cell,
     .toggle-cell {
       background: transparent !important;
+    }
+
+    td {
+      background-color: inherit !important;
     }
 
     @media (min-width: 768px) {
@@ -330,101 +335,46 @@
         max-height: 36px;
       }
     
-      .item-large {
-        max-height: 72px;
+      .image-overlay img {
+        max-width: 94vw;
+        max-height: 94vh;
       }
-    }
 
     @media (max-width: 768px) {
 
-    .controls-bar,
-    .controls {
-      width: 100%;
-    }
+  .controls-bar,
+  .controls {
+    width: 100%;
+  }
 
-    .header {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-    
-    .game-icon {
-      width: 64px;
-      height: 64px;
-    }
-    
-    .header-text {
-      align-items: center;
-    }
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 
-      .page-bg {
-        padding: 20px;
-      }
+  .page-bg {
+    padding: 20px;
+  }
 
-      .game-name {
-        display: flex;
-        flex-direction: column;
-        line-height: 1.15;
-      }
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
 
-      .controls-bar {
-        flex-direction: column;
-        align-items: stretch;
-      }
+  th, td {
+    font-size: 12px;
+    padding: 10px 8px;
+    background-color: inherit !important;
+  }
 
-      .controls {
-        flex-direction: column;
-      }
-
-      .controls .filter-group {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-      }
-
-      .controls button {
-        width: 100%;
-        font-size: 12px;
-        padding: 8px 10px;
-      }
-
-      .controls label {
-        margin-top: 4px;
-      }
-
-      .search-wrapper,
-      #searchInput {
-        width: 100%;
-      }
-
-      .table-container {
-        padding-left: 0;
-        padding-right: 0;
-      }
-    
-      table {
-        display: block;
-        width: 100%;
-        max-width: 100%;
-        overflow-x: auto;
-        white-space: nowrap;
-      }
-    
-      th, td {
-        font-size: 12px;
-        padding: 10px 8px;
-      }
-    
-      th:nth-child(2),
-      td:nth-child(2) {
-        min-width: 220px;
-
-      td,
-      th {
-        background-color: inherit !important;
-      }
-      }
-    }
+  th:nth-child(2),
+  td:nth-child(2) {
+    min-width: 220px;
+  }
+}
   </style>
 </head>
 <body>
@@ -2260,6 +2210,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
