@@ -146,6 +146,22 @@
       font-size: 12px;
     }
 
+    .detail-row {
+      display: none;
+    }
+    
+    .detail-content {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .detail-content img {
+      width: 180px;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
     .search-wrapper {
       position: relative;
     }
@@ -215,12 +231,13 @@
       background-color: #e3ef9f;
     }
 
-    th:nth-child(1), td:nth-child(1) { width: 70px; text-align: right; }
-    th:nth-child(2), td:nth-child(2) { width: 350px; }
-    th:nth-child(3), td:nth-child(3) { width: 100px; }
-    th:nth-child(4), td:nth-child(4) { width: 100px; text-align: right; }
-    th:nth-child(5), td:nth-child(5) { width: 150px; text-align: right; }
-    th:nth-child(6), td:nth-child(6) { width: 160px; text-align: right; }
+    th:nth-child(1), td:nth-child(1) { width: 40px; text-align: center; }
+    th:nth-child(2), td:nth-child(2) { width: 70px; text-align: right; }
+    th:nth-child(3), td:nth-child(3) { width: 350px; }
+    th:nth-child(4), td:nth-child(4) { width: 100px; }
+    th:nth-child(5), td:nth-child(5) { width: 100px; text-align: right; }
+    th:nth-child(6), td:nth-child(6) { width: 120px; text-align: right; }
+    th:nth-child(7), td:nth-child(7) { width: 160px; text-align: right; }
 
     .credits {
       margin-top: 14px;
@@ -399,7 +416,6 @@
     </tr>
         </thead>
         <tbody>
-            <tr>
             <tr class="item-row" onclick="toggleRow(this)">
                 <td class="toggle-cell">▶</td>
                 <td>#</td>
@@ -2042,135 +2058,118 @@
 
     <script>
 function applyZebraStriping() {
-    const rows = Array.from(document.querySelectorAll("table tbody tr"))
-        .filter(row => row.style.display !== "none" && row.id !== "noResultsRow");
+  const rows = Array.from(document.querySelectorAll("tr.item-row"))
+    .filter(row => row.style.display !== "none");
 
-    rows.forEach((row, index) => {
-        row.classList.remove("row-even", "row-odd");
-        row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
-    });
+  rows.forEach((row, index) => {
+    row.classList.remove("row-even", "row-odd");
+    row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
+  });
 }
-        
+
 function calculateAndRank() {
-    const tbody = document.querySelector("table tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"))
-    .filter(row => row.id !== "noResultsRow");
+  const tbody = document.querySelector("table tbody");
+  const rows = Array.from(document.querySelectorAll("tr.item-row"));
 
-    rows.forEach(row => {
-        const type = row.children[2].textContent.trim().toLowerCase();
-        const rarity = Number(row.children[3].textContent);
-        const power = Number(row.children[4].textContent);
+  rows.forEach(row => {
+    const rarity = Number(row.querySelector(".rarity").textContent);
+    const power = Number(row.querySelector(".power").textContent);
 
-        let totalValue;
-        if (type === "tool") {
-            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
-        } else {
-            totalValue = (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000;
-        }
+    const totalValue = Math.round(
+      (Math.pow(rarity, 3) * Math.pow(power, 1.5)) / 1000
+    );
 
-        totalValue = Math.round(totalValue);
-        row.children[5].textContent = totalValue.toLocaleString();
+    row.querySelector(".total-value").textContent = totalValue.toLocaleString();
+    row.dataset.total = totalValue;
+    row.dataset.rarity = rarity;
+    row.dataset.power = power;
+  });
 
-        row.dataset.total = totalValue;
-        row.dataset.power = power;
-        row.dataset.rarity = rarity;
+  rows
+    .sort((a, b) => b.dataset.total - a.dataset.total)
+    .forEach((row, index) => {
+      row.querySelector(".rank-cell").textContent = `#${index + 1}`;
+      row.dataset.rank = index + 1;
+      tbody.appendChild(row);
+      tbody.appendChild(row.nextElementSibling); // keep detail row attached
     });
 
-    rows.sort((a, b) => b.dataset.total - a.dataset.total);
-
-    rows.forEach((row, index) => {
-        row.dataset.rank = index + 1;
-        row.children[0].textContent = `#${index + 1}`;
-        tbody.appendChild(row);
-    });
+  applyZebraStriping();
 }
+
 function sortTable(type) {
-    const tbody = document.querySelector("table tbody");
-    const rows = Array.from(tbody.querySelectorAll("tr"))
-        .filter(row => row.id !== "noResultsRow");
+  const tbody = document.querySelector("table tbody");
+  const rows = Array.from(document.querySelectorAll("tr.item-row"));
 
-    let key;
-    let ascending = false;
+  let key = type;
+  let ascending = type === "rank";
 
-    if (type === "rank") {
-        key = "rank";
-        ascending = true;
-    }
-    if (type === "rarity") key = "rarity";
-    if (type === "power") key = "power";
-
-    rows.sort((a, b) => {
-        const A = Number(a.dataset[key]);
-        const B = Number(b.dataset[key]);
-        return ascending ? A - B : B - A;
+  rows
+    .sort((a, b) => {
+      const A = Number(a.dataset[key]);
+      const B = Number(b.dataset[key]);
+      return ascending ? A - B : B - A;
+    })
+    .forEach(row => {
+      tbody.appendChild(row);
+      tbody.appendChild(row.nextElementSibling);
     });
 
-    rows.forEach(row => tbody.appendChild(row));
-
-    applyZebraStriping(); 
+  applyZebraStriping();
 }
 
 function applyFilters() {
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
-    const showWeapon = document.getElementById("filterWeapon").checked;
-    const showTool = document.getElementById("filterTool").checked;
+  const searchValue = document.getElementById("searchInput").value.toLowerCase();
+  const showWeapon = document.getElementById("filterWeapon").checked;
+  const showTool = document.getElementById("filterTool").checked;
 
-    const rows = document.querySelectorAll("table tbody tr");
-    const noResultsRow = document.getElementById("noResultsRow");
+  const rows = document.querySelectorAll("tr.item-row");
+  const noResultsRow = document.getElementById("noResultsRow");
 
-    let visibleRows = [];
+  let visibleCount = 0;
 
-    rows.forEach(row => {
-        if (row.id === "noResultsRow") return;
+  rows.forEach(row => {
+    const name = row.querySelector(".item-name").textContent.toLowerCase();
+    const type = row.querySelector(".item-type").textContent.toLowerCase();
 
-        const itemName = row.children[1].textContent.toLowerCase();
-        const type = row.children[2].textContent.toLowerCase();
+    let visible = true;
+    if (type === "weapon" && !showWeapon) visible = false;
+    if (type === "tool" && !showTool) visible = false;
+    if (!name.includes(searchValue)) visible = false;
 
-        let visible = true;
+    row.style.display = visible ? "" : "none";
+    row.nextElementSibling.style.display = "none";
+    row.classList.remove("open");
+    row.querySelector(".toggle-cell").textContent = "▶";
 
-        if (type === "weapon" && !showWeapon) visible = false;
-        if (type === "tool" && !showTool) visible = false;
-        if (!itemName.includes(searchValue)) visible = false;
+    if (visible) visibleCount++;
+  });
 
-        row.style.display = visible ? "" : "none";
-
-        if (visible) visibleRows.push(row);
-    });
-
-    visibleRows.forEach((row, index) => {
-        row.classList.remove("row-even", "row-odd");
-        row.classList.add(index % 2 === 0 ? "row-odd" : "row-even");
-    });
-
-    noResultsRow.style.display = visibleRows.length === 0 ? "" : "none";
-    
-    applyZebraStriping();
-    }
-
-calculateAndRank();
-applyFilters();
-
-function searchTable() {
-    applyFilters();
+  noResultsRow.style.display = visibleCount === 0 ? "" : "none";
+  applyZebraStriping();
 }
 
-</script>
-    </div>
-  <script>
-  function toggleRow(row) {
-  const arrow = row.querySelector('.toggle-cell');
+function toggleRow(row) {
+  const detailRow = row.nextElementSibling;
+  const arrow = row.querySelector(".toggle-cell");
 
-  row.classList.toggle('open');
+  const isOpen = detailRow.style.display === "table-row";
 
-  if (row.classList.contains('open')) {
-    arrow.textContent = '▼';
-  } else {
-    arrow.textContent = '▶';
-  }
+  detailRow.style.display = isOpen ? "none" : "table-row";
+  arrow.textContent = isOpen ? "▶" : "▼";
+  row.classList.toggle("open", !isOpen);
 }
+
+/* ========= INIT ========= */
+window.addEventListener("load", () => {
+  calculateAndRank();
+  applyFilters();
+});
 </script>
+
 </body>
 </html> 
+
 
 
 
