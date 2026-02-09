@@ -348,7 +348,7 @@
             <div class="header-text">
                 <div class="game-name">Shrek In The Backrooms</div>
                 <div class="author">Unofficial Value list</div>
-                <div class="last-updated">Last updated: 1/21/2026</div>
+                <div class="last-updated">Last updated: 2/9/2026</div>
             </div>
         </div>
     <p class="description">
@@ -389,6 +389,7 @@
     <table>
         <thead>
     <tr>
+        <th></th>
         <th>Rank</th>
         <th>Weapon / Item</th>
         <th>Type</th>
@@ -399,12 +400,21 @@
         </thead>
         <tbody>
             <tr>
+            <tr class="item-row" onclick="toggleRow(this)">
+                <td class="toggle-cell">▶</td>
                 <td>#</td>
                 <td>MOAW/Waffle Launcher</td>
                 <td>Weapon</td>
                 <td>100</td>
                 <td>100</td>
                 <td>x</td>
+            </tr>
+          <tr class="detail-row">
+          <td colspan="7">
+          <div class="detail-content">
+          <img src="images/MOAW.jpg" alt="MOAW/Waffle Launcher">
+          </div>
+          </td>
             </tr>
             <tr>
                 <td>#</td>
@@ -2146,8 +2156,22 @@ function searchTable() {
 
 </script>
     </div>
+  <script>
+  function toggleRow(row) {
+  const arrow = row.querySelector('.toggle-cell');
+
+  row.classList.toggle('open');
+
+  if (row.classList.contains('open')) {
+    arrow.textContent = '▼';
+  } else {
+    arrow.textContent = '▶';
+  }
+}
+</script>
 </body>
 </html> 
+
 
 
 
