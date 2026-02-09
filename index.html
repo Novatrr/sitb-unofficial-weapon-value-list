@@ -244,6 +244,38 @@
       cursor: pointer;
     }
 
+    .item-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .item-thumb {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      cursor: pointer;
+      image-rendering: pixelated;
+    }
+    
+    /* popup overlay */
+    .image-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    
+    .image-overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
     @media (min-width: 768px) {
       .description,
       .credits {
@@ -400,7 +432,14 @@
         <tbody>
             <tr>
                 <td>#</td>
-                <td>MOAW/Waffle Launcher</td>
+                <td class="item-cell">
+                <span class="item-name">MOAW/Waffle Launcher</span>
+                <img
+                  src="images/MOAW.png"
+                  alt="MOAW/Waffle Launcher"
+                  class="item-thumb"
+                  onclick="openImage(this.src)"
+                ></td>
                 <td>Weapon</td>
                 <td>100</td>
                 <td>100</td>
@@ -2144,7 +2183,22 @@ function searchTable() {
     applyFilters();
 }
 
+      function openImage(src) {
+  const overlay = document.createElement("div");
+  overlay.className = "image-overlay";
+
+  const img = document.createElement("img");
+  img.src = src;
+
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener("click", () => {
+    overlay.remove();
+  });
+}
 </script>
     </div>
 </body>
 </html> 
+
