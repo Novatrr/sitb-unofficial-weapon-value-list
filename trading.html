@@ -202,11 +202,6 @@ h1 {
 
 const ITEMS = JSON.parse(localStorage.getItem("tradeItems")) || [];
 
-if (!ITEMS.length) {
-  alert("Open main page first to load item data.");
-  window.location.href = "index.html";
-}
-
 function createTradeBox(boxId) {
   const box = document.getElementById(boxId);
   const items = [];
@@ -326,3 +321,4 @@ createTradeBox("rightBox");
 
 </body>
 </html>
+
