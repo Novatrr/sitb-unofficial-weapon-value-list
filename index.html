@@ -2754,11 +2754,11 @@ calculateAndRank();
     localStorage.setItem("tradeItems", JSON.stringify(items));
 }
 
-calculateAndRank();
-applyFilters();
-exportItemsToStorage();
-
-applyFilters();
+window.addEventListener("load", () => {
+    calculateAndRank();
+    applyFilters();
+    exportItemsToStorage();
+});
 
 function searchTable() {
     applyFilters();
@@ -2782,3 +2782,4 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
