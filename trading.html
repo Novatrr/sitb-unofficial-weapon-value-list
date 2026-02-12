@@ -21,8 +21,8 @@ body {
 
 .return-btn {
   position: absolute;
-  top: 25px;
-  left: 40px;
+  top: 35px;
+  left: 70px;
   background: #111;
   color: #fff;
   padding: 10px 18px;
@@ -115,7 +115,6 @@ h1 {
   background: #333;
 }
 
-/* ===== SEARCH ===== */
 .search-popup {
   margin-top: 10px;
 }
@@ -173,6 +172,11 @@ h1 {
   align-items: center;
   font-size: 36px;
   color: white;
+}
+
+.no-items {
+  color: #aaa;
+  padding: 6px 10px;
 }
 
 </style>
@@ -293,7 +297,7 @@ function createTradeBox(boxId) {
       );
 
       if (!filtered.length) {
-        results.innerHTML = "<div>No items found</div>";
+        results.innerHTML = "<div class='no-items'>No items found</div>";
       } else {
         filtered.forEach(i => {
           const div = document.createElement("div");
@@ -314,11 +318,134 @@ function createTradeBox(boxId) {
   render();
 }
 
-createTradeBox("leftBox");
-createTradeBox("rightBox");
+document.addEventListener("DOMContentLoaded", () => {
 
+  const ITEMS = JSON.parse(localStorage.getItem("tradeItems")) || [];
+  console.log("Loaded items:", ITEMS);
+
+  if (!ITEMS.length) {
+    console.warn("No items in storage.");
+  }
+
+  function createTradeBox(boxId) {
+    const box = document.getElementById(boxId);
+    const items = [];
+
+    function updateTotals() {
+      let total = items.reduce((sum, i) => sum + i.value * i.qty, 0);
+      document.getElementById(boxId === "leftBox" ? "leftTotal" : "rightTotal")
+        .innerText = "Total: " + total;
+
+      updateResult();
+    }
+
+    function updateResult() {
+      const left = parseInt(document.getElementById("leftTotal").innerText.replace("Total: ",""));
+      const right = parseInt(document.getElementById("rightTotal").innerText.replace("Total: ",""));
+      const result = document.getElementById("resultBox");
+
+      if (left > right) result.innerText = "W";
+      else if (left < right) result.innerText = "L";
+      else result.innerText = "F";
+    }
+
+    function render() {
+      box.innerHTML = "";
+
+      items.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+
+        div.innerHTML = `
+          <span>${item.name}</span>
+          <div class="item-controls">
+            <button class="qty-btn">▲</button>
+            <span>${item.qty}x</span>
+            <button class="qty-btn">▼</button>
+            <span>${item.qty * item.value}</span>
+          </div>
+        `;
+
+        const buttons = div.querySelectorAll(".qty-btn");
+        const upBtn = buttons[0];
+        const downBtn = buttons[1];
+
+        upBtn.onclick = () => {
+          item.qty++;
+          render();
+          updateTotals();
+        };
+
+        downBtn.onclick = () => {
+          item.qty--;
+          if (item.qty <= 0) {
+            items.splice(items.indexOf(item),1);
+          }
+          render();
+          updateTotals();
+        };
+
+        box.appendChild(div);
+      });
+
+      const addBtn = document.createElement("div");
+      addBtn.className = "add-btn";
+      addBtn.innerText = "Add +";
+      addBtn.onclick = showSearch;
+      box.appendChild(addBtn);
+    }
+
+    function showSearch() {
+      const popup = document.createElement("div");
+      popup.className = "search-popup";
+
+      popup.innerHTML = `
+        <input type="text" placeholder="Search item...">
+        <div class="search-results"></div>
+      `;
+
+      const input = popup.querySelector("input");
+      const results = popup.querySelector(".search-results");
+
+      input.oninput = () => {
+        const val = input.value.toLowerCase();
+        results.innerHTML = "";
+
+        const filtered = ITEMS.filter(i =>
+          i.name.toLowerCase().includes(val) &&
+          !items.some(it => it.name === i.name)
+        );
+
+        if (!filtered.length) {
+          results.innerHTML = "<div class='no-items'>No items found</div>";
+        } else {
+          filtered.forEach(i => {
+            const div = document.createElement("div");
+            div.innerText = i.name;
+            div.style.color = "white";
+            div.onclick = () => {
+              items.push({...i, qty:1});
+              render();
+              updateTotals();
+            };
+            results.appendChild(div);
+          });
+        }
+      };
+
+      box.appendChild(popup);
+    }
+
+    render();
+  }
+
+  createTradeBox("leftBox");
+  createTradeBox("rightBox");
+
+});
 </script>
 
 </body>
 </html>
+
 
