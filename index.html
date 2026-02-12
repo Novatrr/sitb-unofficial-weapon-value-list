@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1200">
   <title>Shrek In The Backrooms – Unofficial Value List</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
@@ -319,6 +319,36 @@
     .credits {
       font-size: 14px;
     }
+
+    .trading-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  margin-right: 10px;
+  }
+
+  .trading-button {
+    display: inline-block;
+    padding: 14px 28px;
+    background: linear-gradient(145deg, #4b7f24, #5e8f2e);
+    color: white;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 10px;
+    font-family: 'VCR', monospace;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    transition: all 0.2s ease;
+  }
+  
+  .trading-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    background: linear-gradient(145deg, #3f6f1d, #4b7f24);
+  }
+  
+  .trading-button:active {
+    transform: scale(0.97);
+  }
   </style>
 </head>
 <body>
@@ -361,6 +391,11 @@
 
     </div>
 
+      <div class="trading-button-wrapper">
+      <a href="trading.html" class="trading-button">
+        Trading Mode
+      </a>
+    </div>
     <div class="search-wrapper">
     <input 
         type="text"
@@ -2708,6 +2743,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
