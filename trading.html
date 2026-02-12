@@ -5,41 +5,70 @@
 <meta name="viewport" content="width=1200">
 <title>Trading Mode</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-
 <style>
+
+/* ===== FONT ===== */
+@font-face {
+  font-family: 'VCR';
+  src: url('./VCR_OSD_MONO_1.001.ttf') format('truetype');
+}
+
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'VCR', monospace;
   background: linear-gradient(to bottom,#f7f9c4,#cddc7a);
-  color: white;
+}
+
+.return-btn {
+  position: absolute;
+  top: 25px;
+  left: 40px;
+  background: #111;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.return-btn:hover {
+  background: #333;
 }
 
 .container {
   max-width: 1200px;
-  margin: 50px auto;
+  margin: 80px auto 40px auto;
 }
 
 h1 {
   text-align: center;
-  font-size: 42px;
-  margin-bottom: 40px;
-  color: #111;
+  font-size: 48px;
+  margin-bottom: 50px;
 }
 
 .trade-area {
   display: flex;
-  justify-content: space-between;
-  gap: 30px;
+  gap: 40px;
 }
 
 .trade-box {
   flex: 1;
-  background: rgba(0,0,0,0.75);
-  border-radius: 20px;
-  padding: 20px;
-  min-height: 400px;
-  position: relative;
+  background: rgba(0,0,0,0.85);
+  border-radius: 25px;
+  padding: 25px;
+  height: 450px;
+  overflow-y: auto;
+  box-shadow: 0 0 25px rgba(0,0,0,0.4);
+}
+
+.trade-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+.trade-box::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
 }
 
 .item {
@@ -47,35 +76,46 @@ h1 {
   justify-content: space-between;
   align-items: center;
   background: rgba(255,255,255,0.08);
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  color: white;
 }
 
 .item-controls {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
 
 .qty-btn {
-  background: #444;
+  background: #222;
   border: none;
   color: white;
   padding: 4px 8px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 6px;
+}
+
+.qty-btn:hover {
+  background: #444;
 }
 
 .add-btn {
   margin-top: 15px;
-  padding: 10px;
-  background: #222;
-  border-radius: 10px;
+  padding: 12px;
+  background: #1c1c1c;
+  border-radius: 12px;
   text-align: center;
   cursor: pointer;
+  color: #fff;
 }
 
+.add-btn:hover {
+  background: #333;
+}
+
+/* ===== SEARCH ===== */
 .search-popup {
   margin-top: 10px;
 }
@@ -85,68 +125,69 @@ h1 {
   padding: 8px;
   border-radius: 8px;
   border: none;
+  font-family: 'VCR';
 }
 
 .search-results {
   margin-top: 5px;
-  background: rgba(255,255,255,0.05);
+  background: #111;
   border-radius: 8px;
-  max-height: 120px;
+  max-height: 150px;
   overflow-y: auto;
 }
 
 .search-results div {
-  padding: 6px;
+  padding: 6px 10px;
   cursor: pointer;
 }
 
 .search-results div:hover {
-  background: rgba(255,255,255,0.1);
-}
-
-.total-box {
-  margin-top: 15px;
-  padding: 10px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 10px;
-  text-align: center;
-}
-
-.middle-result {
-  width: 100px;
-  height: 100px;
-  background: rgba(0,0,0,0.8);
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 40px;
-  font-weight: bold;
+  background: #333;
 }
 
 .summary-area {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 40px;
 }
 
+.total-box {
+  background: #111;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  color: white;
+  min-width: 120px;
+  text-align: center;
+}
+
+.middle-result {
+  width: 90px;
+  height: 90px;
+  background: #111;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36px;
+  color: white;
+}
+
 </style>
 </head>
-
 <body>
+
+<a href="index.html" class="return-btn">&lt; RETURN</a>
 
 <div class="container">
 
 <h1>Trading Mode</h1>
 
 <div class="trade-area">
-
   <div class="trade-box" id="leftBox"></div>
-
   <div class="trade-box" id="rightBox"></div>
-
 </div>
 
 <div class="summary-area">
@@ -159,12 +200,10 @@ h1 {
 
 <script>
 
-  <script>
-
 const ITEMS = JSON.parse(localStorage.getItem("tradeItems")) || [];
 
 if (!ITEMS.length) {
-  alert("Please open index.html first to load item data.");
+  alert("Open main page first to load item data.");
   window.location.href = "index.html";
 }
 
@@ -199,7 +238,7 @@ function createTradeBox(boxId) {
       div.className = "item";
 
       div.innerHTML = `
-        <span>${item.name} (${item.value})</span>
+        <span>${item.name}</span>
         <div class="item-controls">
           <button class="qty-btn">▲</button>
           <span>${item.qty}x</span>
@@ -208,7 +247,9 @@ function createTradeBox(boxId) {
         </div>
       `;
 
-      const [upBtn, , downBtn] = div.querySelectorAll(".qty-btn");
+      const buttons = div.querySelectorAll(".qty-btn");
+      const upBtn = buttons[0];
+      const downBtn = buttons[1];
 
       upBtn.onclick = () => {
         item.qty++;
@@ -231,9 +272,7 @@ function createTradeBox(boxId) {
     const addBtn = document.createElement("div");
     addBtn.className = "add-btn";
     addBtn.innerText = "Add +";
-
-    addBtn.onclick = () => showSearch();
-
+    addBtn.onclick = showSearch;
     box.appendChild(addBtn);
   }
 
@@ -258,14 +297,14 @@ function createTradeBox(boxId) {
         !items.some(it => it.name === i.name)
       );
 
-      if (filtered.length === 0) {
+      if (!filtered.length) {
         results.innerHTML = "<div>No items found</div>";
       } else {
         filtered.forEach(i => {
           const div = document.createElement("div");
           div.innerText = i.name;
           div.onclick = () => {
-            items.push({ ...i, qty: 1 });
+            items.push({...i, qty:1});
             render();
             updateTotals();
           };
