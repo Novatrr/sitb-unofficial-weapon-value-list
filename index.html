@@ -320,24 +320,29 @@
       font-size: 14px;
     }
 
-    .trading-button-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 12px;
-  margin-right: 10px;
+  .trading-button-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 18px auto 0 auto;
+    display: flex;
+    justify-content: center;
   }
 
   .trading-button {
     display: inline-block;
-    padding: 14px 28px;
+    padding: 16px 36px;
     background: linear-gradient(145deg, #4b7f24, #5e8f2e);
     color: white;
-    font-size: 18px;
+    font-size: 20px;
     text-decoration: none;
-    border-radius: 10px;
+    border-radius: 12px;
     font-family: 'VCR', monospace;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 
+      0 6px 15px rgba(0,0,0,0.25),
+      0 0 10px rgba(94, 143, 46, 0.6),
+      0 0 20px rgba(94, 143, 46, 0.4);
+    transition: all 0.25s ease;
   }
   
   .trading-button:hover {
@@ -349,6 +354,17 @@
   .trading-button:active {
     transform: scale(0.97);
   }
+
+  @keyframes pulseGlow {
+  0% { box-shadow: 0 0 10px rgba(94,143,46,0.5); }
+  50% { box-shadow: 0 0 25px rgba(120,200,60,0.8); }
+  100% { box-shadow: 0 0 10px rgba(94,143,46,0.5); }
+  }
+
+  .trading-button {
+    animation: pulseGlow 2.5s infinite ease-in-out;
+  }
+
   </style>
 </head>
 <body>
@@ -2743,6 +2759,7 @@ function searchTable() {
     </div>
 </body>
 </html> 
+
 
 
 
